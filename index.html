@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learn Game Development – College of the Immaculate Conception</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --yellow: #ffd000;
+  --white: #ffffff;
+  --text-muted: #ffd9d9;
+  --card-bg: rgba(80,0,10,0.85);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(180deg,#3b0000 0%,#5c0000 60%,#2a0000 100%);
+  color:var(--white);
+  font-family:'Instrument Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ── TOP UTILITY BAR ── */
+.nav-top {
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 40px;
+  height:44px;
+  border-bottom:1px solid #e0e0e0;
+}
+
+.nav-top-inner {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  max-width:1200px;
+}
+
+.nav-top-left {
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav-top-left a {
+  text-decoration:none;
+  color:#7a7a7a;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-family:'Instrument Sans',sans-serif;
+  transition:color 0.2s;
+}
+
+.nav-top-left a:hover { color:#8f0018; }
+
+.nav-top-search {
+  display:flex;
+  align-items:center;
+  border:1.5px solid #bbb;
+  border-radius:4px;
+  padding:4px 12px;
+  gap:8px;
+  background:#fff;
+}
+
+.nav-top-search input {
+  border:none;
+  outline:none;
+  font-size:12px;
+  color:#555;
+  font-family:'Instrument Sans',sans-serif;
+  width:160px;
+  background:transparent;
+}
+
+.nav-top-search svg {
+  width:14px;
+  height:14px;
+  stroke:#888;
+  fill:none;
+  flex-shrink:0;
+}
+
+.nav-top-right {
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav-top-right a {
+  text-decoration:none;
+  color:#7a7a7a;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-family:'Instrument Sans',sans-serif;
+  transition:color 0.2s;
+}
+
+.nav-top-right a:hover { color:#8f0018; }
+
+/* ── MAIN NAV ── */
+.nav-main {
+  background-image: url("hero-bg3.jpg");
+  background-size:cover;
+  background-position:center top;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 40px;
+  height:72px;
+  position:sticky;
+  top:0;
+  z-index:999;
+  box-shadow:0 2px 16px rgba(0,0,0,0.5);
+}
+
+.nav-main::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(80,0,0,0.72);
+  pointer-events:none;
+}
+
+.nav-main-inner {
+  display:flex;
+  align-items:center;
+  width:100%;
+  max-width:1200px;
+  position:relative;
+  z-index:1;
+}
+
+.nav-logo {
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  margin-right:36px;
+}
+
+.nav-logo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.nav-main-links {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  list-style:none;
+  flex:1;
+}
+
+.nav-main-links li a {
+  text-decoration:none;
+  color:rgba(255,255,255,0.88);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.07em;
+  text-transform:uppercase;
+  font-family:'Instrument Sans',sans-serif;
+  padding:0 20px;
+  height:72px;
+  display:flex;
+  align-items:center;
+  transition:color 0.2s, background 0.2s;
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+
+.nav-main-links li:first-child a {
+  border-left:1px solid rgba(255,255,255,0.08);
+}
+
+.nav-main-links li a:hover {
+  color:var(--yellow);
+  background:rgba(255,208,0,0.08);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px 160px; /* <-- reduced top padding, added bottom padding to push content up */
+  background-image: url("hero-bg3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(36px,6vw,72px);
+  font-weight:900;
+  letter-spacing:0.06em;
+  text-shadow:
+    0 0 40px rgba(255,208,0,0.6),
+    0 0 80px rgba(255,0,0,0.4);
+  margin-bottom:30px;
+}
+
+.hero-title span{color:var(--yellow);}
+
+.hero-sub{
+  font-family:'Instrument Sans',sans-serif;
+  font-size:13px;
+  letter-spacing:0.35em;
+  color:var(--yellow);
+  text-transform:uppercase;
+  margin-top:1px;
+}
+
+/* ── SECTIONS ── */
+section{padding:80px 40px;}
+.section-inner{max-width:1100px;margin:auto;}
+
+.section-heading{
+  font-family:'Orbitron';
+  font-size:30px;
+  color:var(--white);
+  margin-bottom:30px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.heading-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,var(--yellow),transparent);
+}
+
+/* ── WHAT SECTION ── */
+.what-section{
+  background:linear-gradient(180deg,#4a0000 0%,#2a0000 100%);
+}
+
+.what-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:start;
+}
+
+.what-text p{
+  font-size:13px;
+  line-height:1.8;
+  color:var(--text-muted);
+  font-family:'Instrument Sans',sans-serif;
+}
+
+.mac-lab-card{
+  background:var(--card-bg);
+  border:1px solid rgba(255,208,0,0.3);
+  border-radius:16px;
+  padding:28px;
+  box-shadow:0 0 30px rgba(255,0,0,0.2);
+}
+
+.mac-lab-title{
+  font-family:'Orbitron';
+  font-size:18px;
+  text-align:center;
+  margin-top:10px;
+  color:var(--yellow);
+}
+
+.mac-lab-desc{
+  font-size:13px;
+  color:var(--text-muted);
+  text-align:center;
+  margin-top:10px;
+  font-family:'Instrument Sans',sans-serif;
+}
+
+.mac-lab-images{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.mac-lab-images img{
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid rgba(255,208,0,0.25);
+}
+
+.mac-badges{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px;
+  margin-top:14px;
+}
+
+.mac-badge{
+  background:rgba(255,208,0,0.15);
+  border:1px solid rgba(255,208,0,0.4);
+  border-radius:20px;
+  padding:4px 12px;
+  font-size:11px;
+  color:var(--yellow);
+  font-family:'Instrument Sans',sans-serif;
+}
+
+/* ── TYPES ── */
+.types-section{
+  background:linear-gradient(180deg,#2a0000 0%,#3b0000 100%);
+}
+
+.dev-list{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.dev-item{
+  background:var(--card-bg);
+  border-left:3px solid var(--yellow);
+  padding:20px;
+  border-radius:10px;
+}
+
+.dev-item-title{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:6px;
+  font-family:'Orbitron',sans-serif;
+}
+
+.dev-item-details{
+  font-size:13px;
+  color:var(--text-muted);
+  font-family:'Instrument Sans',sans-serif;
+}
+
+/* ── WHY CHOOSE SECTION ── */
+.why-section {
+  background:linear-gradient(180deg,#3b0000 0%,#4a0000 100%);
+}
+
+.why-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+}
+
+.why-card {
+  background:var(--card-bg);
+  border:1px solid rgba(255,208,0,0.2);
+  border-radius:14px;
+  padding:28px 24px;
+  transition:transform 0.2s, box-shadow 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+
+.why-card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg, var(--yellow), transparent);
+}
+
+.why-card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 8px 32px rgba(255,0,0,0.25);
+}
+
+.why-icon {
+  width:48px;
+  height:48px;
+  background:rgba(255,208,0,0.12);
+  border:1px solid rgba(255,208,0,0.3);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:16px;
+}
+
+.why-icon svg {
+  width:24px;
+  height:24px;
+  stroke:var(--yellow);
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.why-card-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--yellow);
+  margin-bottom:10px;
+  line-height:1.4;
+}
+
+.why-card-text {
+  font-size:13px;
+  line-height:1.75;
+  color:var(--text-muted);
+  font-family:'Instrument Sans',sans-serif;
+}
+
+.why-stat {
+  display:inline-block;
+  font-family:'Orbitron',sans-serif;
+  font-size:28px;
+  font-weight:900;
+  color:var(--yellow);
+  margin-top:14px;
+}
+
+.why-stat-label {
+  font-size:11px;
+  color:var(--text-muted);
+  font-family:'Instrument Sans',sans-serif;
+  margin-top:2px;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:#1a0000;
+  border-top:1px solid rgba(255,208,0,0.2);
+  padding:60px 40px 30px;
+}
+
+.footer-inner{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:40px;
+  align-items:center;
+}
+
+.footer-logo-circle{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  overflow:hidden;
+  border:2px solid rgba(255,208,0,0.4);
+  background:#2a0000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.footer-logo-circle img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.footer-brand-name{
+  font-family:'Orbitron';
+  font-size:20px;
+  color:var(--yellow);
+}
+
+.footer-brand-sub{
+  font-size:13px;
+  color:#ff6666;
+  margin-top:4px;
+  font-family:'Instrument Sans',sans-serif;
+}
+
+.footer-address{
+  font-size:13px;
+  color:var(--text-muted);
+  margin-top:10px;
+  font-family:'Instrument Sans',sans-serif;
+}
+
+.enroll-btn{
+  display:inline-block;
+  background:linear-gradient(135deg,#cc0000,#7a0000);
+  color:white;
+  border:none;
+  padding:16px 32px;
+  border-radius:8px;
+  font-family:'Orbitron';
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 0 25px rgba(255,0,0,0.5);
+  transition:box-shadow 0.2s, transform 0.2s;
+  white-space:nowrap;
+}
+
+.enroll-btn:hover{
+  box-shadow:0 0 40px rgba(255,0,0,0.8);
+  transform:translateY(-2px);
+}
+
+.footer-bottom{
+  text-align:center;
+  margin-top:40px;
+  font-size:12px;
+  color:#aaa;
+  font-family:'Instrument Sans',sans-serif;
+}
+
+@media(max-width:900px){
+  .why-grid { grid-template-columns:1fr 1fr; }
+}
+
+@media(max-width:768px){
+  .nav-top { display:none; }
+
+  /* Fix nav overflow */
+  .nav-main { padding:0 12px; height:auto; min-height:56px; }
+  .nav-main-inner { flex-direction:column; align-items:flex-start; padding:8px 0; gap:6px; }
+  .nav-logo { width:40px; height:40px; margin-right:0; }
+  .nav-main-links {
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:2px;
+    width:100%;
+  }
+  .nav-main-links li a {
+    padding:4px 8px;
+    height:auto;
+    font-size:10px;
+    border:none;
+    border-radius:4px;
+  }
+  .nav-main-links li:first-child a { border:none; }
+
+  /* Fix section padding */
+  section { padding:40px 16px; }
+
+  /* Fix hero */
+  .hero { padding:40px 16px 80px; }
+  .hero-title { font-size:clamp(28px,10vw,48px); }
+
+  /* Fix grids */
+  .what-grid { grid-template-columns:1fr; }
+  .why-grid { grid-template-columns:1fr; }
+
+  /* Fix section heading overflow */
+  .section-heading { font-size:18px; flex-wrap:wrap; }
+
+  /* Fix footer */
+  .footer-inner {
+    grid-template-columns:1fr;
+    text-align:center;
+    justify-items:center;
+  }
+
+  /* Fix dev-item title overflow */
+  .dev-item-title { font-size:13px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP UTILITY BAR -->
+<div class="nav-top">
+  <div class="nav-top-inner">
+
+    <div class="nav-top-left">
+      <a href="https://www.cic.edu.ph/services" target="_blank">Services</a>
+      <a href="https://www.cic.edu.ph/admissionprocess" target="_blank">Apply</a>
+      <a href="#">Visit</a>
+    </div>
+
+    <div class="nav-top-search">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" placeholder="Search our Site">
+    </div>
+
+    <div class="nav-top-right">
+      <a href="https://classroom.google.com" target="_blank">Google Classroom</a>
+      <a href="https://www.cic.edu.ph/studentportal" target="_blank">Student Portal</a>
+      <a href="#">Faculty Portal</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="nav-main">
+  <div class="nav-main-inner">
+
+    <div class="nav-logo">
+      <img src="logo2.jpg" alt="CIC Logo">
+    </div>
+
+    <ul class="nav-main-links">
+      <li><a href="https://www.cic.edu.ph/" target="_blank">Home</a></li>
+      <li><a href="https://www.cic.edu.ph/aboutcic" target="_blank">About CIC</a></li>
+      <li><a href="https://www.cic.edu.ph/admissions" target="_blank">Admissions</a></li>
+      <li><a href="https://www.cic.edu.ph/academics" target="_blank">Academics</a></li>
+      <li><a href="https://www.cic.edu.ph/campuslife" target="_blank">Campus Life</a></li>
+      <li><a href="https://www.cic.edu.ph/newsletter" target="_blank">Newsletter</a></li>
+    </ul>
+
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-title">
+    LEARN<br>
+    <span>GAME</span><br>
+    DEVELOPMENT
+  </h1>
+  <p class="hero-sub">BUILD YOUR OWN WORLDS!</p>
+</section>
+
+<!-- WHAT IS GAME DEV -->
+<section class="what-section">
+  <div class="section-inner">
+
+    <h2 class="section-heading">
+      What is BSIT Major in Game Development?
+      <span class="heading-line"></span>
+    </h2>
+
+    <div class="what-grid">
+
+      <div class="what-text">
+        <p>
+          The College of the Immaculate Conception offers a Bachelor of Science in Information Technology (BSIT) program
+           with a specialization in Game Development, designed to develop both technical expertise and creative skills. 
+           The program combines fundamental IT subjects such as programming, database management, networking, 
+           and system analysis with specialized courses in game design, animation, and interactive media. 
+           This allows students to build a strong foundation in technology while exploring the artistic and 
+           creative aspects of digital game creation. </p>
+           <p> <br>
+           Through the Game Development major, students learn the complete process of developing 
+           games—from concept creation and storytelling to coding, testing, and deployment. 
+           The program emphasizes hands-on learning through projects and a capstone experience, 
+           helping students apply their knowledge in real-world scenarios. Graduates are prepared for 
+           careers such as game developer, animator, UI/UX designer, or software developer, making them 
+           versatile professionals ready to enter both the gaming industry and the broader field of information technology.
+        </p></br>
+      </div>
+
+      <div class="mac-lab-card">
+        <div class="mac-lab-title">MAC LABORATORY</div>
+        <p class="mac-lab-desc">
+          The Mac Laboratory is a modern learning space for CIC Information Technology (I.T.) students, 
+          equipped with the latest Mac computers. Designed to foster collaboration, it offers flexible workstations, 
+          high-speed connectivity, and on-site technical support.
+        </p>
+        <div class="mac-lab-images">
+          <img src="mac1.jpg" alt="Mac Laboratory Photo 1">
+          <img src="mac2.jpg" alt="Mac Laboratory Photo 2">
+        </div>
+        <div class="mac-badges">
+          <span class="mac-badge">High-Speed Connectivity</span>
+          <span class="mac-badge">AI Tools</span>
+          <span class="mac-badge">Mac Computers</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TYPES -->
+<section class="types-section">
+  <div class="section-inner">
+
+    <h2 class="section-heading">
+      Types of Game Developers and Their Language
+      <span class="heading-line"></span>
+    </h2>
+
+    <div class="dev-list">
+
+      <div class="dev-item">
+        <div class="dev-item-title">AAA Game Developers</div>
+        <div class="dev-item-details">
+          Work on large-scale, high-budget titles for consoles and PC. <br>
+          Language: Primarily C++ (used in Unreal Engine) because of its speed and control over hardware.</br>
+        </div>
+      </div>
+
+      <div class="dev-item">
+        <div class="dev-item-title">Indie Game Developers</div>
+        <div class="dev-item-details">
+          Small teams or solo developers focusing on creative, unique projects.<br>
+Languages: Often C# (Unity, Godot), JavaScript (Phaser), or Python (for prototyping).</br>
+        </div>
+      </div>
+
+      <div class="dev-item">
+        <div class="dev-item-title">Mobile Game Developers</div>
+        <div class="dev-item-details">
+          Focus on iOS and Android platforms.<br>
+Languages: C# (Unity), Java/Kotlin (Android), Swift (iOS), and sometimes C++ for performance-heavy features.</br>
+        </div>
+      </div>
+
+       <div class="dev-item">
+        <div class="dev-item-title">Web Game Developers</div>
+        <div class="dev-item-details">
+          Create browser-based games. <br>
+Languages: JavaScript (Phaser, Three.js), TypeScript, and HTML5/CSS3 for structure and visuals.</br>
+        </div>
+      </div>
+
+      <div class="dev-item">
+        <div class="dev-item-title">VR/AR Game Developers</div>
+        <div class="dev-item-details">
+         Build immersive experiences for VR headsets and AR apps.<br>
+Languages: C++ (Unreal Engine), C# (Unity), plus JavaScript for WebXR projects.</br>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE GAME DEVELOPMENT -->
+<section class="why-section">
+  <div class="section-inner">
+
+    <h2 class="section-heading">
+      Why Choose Game Development?
+      <span class="heading-line"></span>
+    </h2>
+
+    <div class="why-grid">
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="why-card-title">High-Demand Industry</div>
+        <p class="why-card-text">
+          The global gaming industry generates over $180 billion annually and continues to grow faster than film and music combined. Skilled game developers are among the most sought-after professionals in tech.
+        </p>
+        <div class="why-stat">$180B+</div>
+        <div class="why-stat-label">global gaming market value</div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="why-card-title">Future-Proof Career</div>
+        <p class="why-card-text">
+          Game development skills transfer across industries — VR, AR, simulation, film, healthcare, and education all use game engines. A degree in game development opens doors far beyond entertainment.
+        </p>
+        <div class="why-stat">3.3B+</div>
+        <div class="why-stat-label">gamers worldwide and growing</div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <div class="why-card-title">Blend Creativity and Code</div>
+        <p class="why-card-text">
+          Game development is where art meets engineering. You will design characters, build worlds, write logic, and compose experiences — making it one of the most creatively fulfilling tech disciplines available.
+        </p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="why-card-title">Collaborative Community</div>
+        <p class="why-card-text">
+          Games are built by teams. You will develop real-world collaboration skills working alongside designers, artists, and programmers — preparing you for a professional studio environment from day one.
+        </p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="why-card-title">Hands-On Learning</div>
+        <p class="why-card-text">
+          From your first semester you will be building actual games using industry-standard tools like Unity and Unreal Engine. CIC's Mac Laboratory provides the hardware and software to bring your ideas to life.
+        </p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <div class="why-card-title">Strong Earning Potential</div>
+        <p class="why-card-text">
+          Game developers enjoy competitive salaries globally. Whether you join a studio, freelance, or launch your own indie game, this major equips you with skills the market consistently rewards.
+        </p>
+        <div class="why-stat">Top 10%</div>
+        <div class="why-stat-label">of tech salaries worldwide</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-logo-circle">
+      <img src="logo2.jpg" alt="CIC Logo">
+    </div>
+
+    <div>
+      <div class="footer-brand-name">
+        COLLEGE OF THE<br>
+        IMMACULATE CONCEPTION
+      </div>
+      <div class="footer-brand-sub">Game Development Community</div>
+      <div class="footer-address">
+        2 Ilano Street, Maharlika Highway<br>
+        Cabanatuan City, Nueva Ecija<br>
+        Philippines
+      </div>
+    </div>
+
+    <a href="https://www.cic.edu.ph/studentportal" target="_blank" class="enroll-btn">
+      ENROLL NOW
+    </a>
+
+  </div>
+
+  <div class="footer-bottom">
+    © All Rights Reserved 2025 · College of the Immaculate Conception
+  </div>
+</footer>
+
+</body>
+</html>
